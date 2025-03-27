@@ -1,5 +1,7 @@
 # construct
 
+![alt text](image.png)
+
 # OS 및 라이브러리 버전
 
 OS : Ubuntu 22.04.5 LTS
