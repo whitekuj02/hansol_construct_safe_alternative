@@ -175,14 +175,6 @@ class SimDataset(Dataset):
                 sim.append(cosine)
                 total += cosine
 
-            # threshold = total / len(embeddings)
-
-            # prompt_filter = [idx for idx, p in enumerate(prompt) if sim[idx] > threshold]
-            # print(f"threshold {threshold}, filtering chuck rate {len(prompt_filter) / len(prompt)}")
-
-            # prompt = [prompt[i] for i in prompt_filter]
-            # embeddings = [embeddings[i] for i in prompt_filter]
-
             for idx, p in enumerate(prompt):
                 if sim[idx] < ALL_THRESHOLD: # 가장 스코어가 높은 답안
                     prompt[idx] = "작업전 안전교육 강화 및 작업장 위험요소 점검을 통한 재발 방지와 안전관리 교육 철저를 통한 향후 조치 계획."
@@ -266,15 +258,6 @@ class CustomDataset(Dataset):
             한 행(row)에 대해 5가지 서로 다른 문장 템플릿을 모두 생성하여
             [ {question, answer}, {question, answer}, ... ] 리스트로 반환합니다.
             """
-            # question = (
-            #         # (f"{row['장소(대)']} {row['장소(소)']}에서 " if row['장소(소)'] else f"{row['장소(대)']}에서 ")
-            #         #+ (f"{row['부위(대)']} {row['부위(소)']}에 " if row['부위'] != '/' else "")                
-            #         f"{row['인적사고']} 인적사고"
-            #         + (f", {row['물적사고']} 물적사고 발생. " if row['물적사고'] != '없음' else " 발생. ")
-            #         + f"사고객체는 {row['사고객체(대분류)']}(중분류: {row['사고객체(중분류)']})로 "
-            #         + f"{row['작업프로세스']}중, 사고 원인은 {row['사고원인']}일 때 "
-            #         + "재발 방지 및 조치 계획은?"
-            #  )
             # 템플릿 1
             question1 = (
                 f"{row['인적사고']} 인적사고"
@@ -439,23 +422,6 @@ class ragdataset(Dataset):
                 + f"{row['사고원인']} "
             )
             retriver_document = rag_class.get_answer(rag_prompt)
-
-            # retriver = ""
-            # for i in retriver_document:
-            #     retriver += f"{i.page_content}\n"
-
-            
-            # question1_docs = random.sample(retriver_document, 3)
-            # question2_docs = random.sample(retriver_document, 3)
-            # question3_docs = random.sample(retriver_document, 3)
-            # question4_docs = random.sample(retriver_document, 3)
-            # question5_docs = random.sample(retriver_document, 3)
-
-            # retriver1_text = "\n".join([doc.page_content for doc in question1_docs])
-            # retriver2_text = "\n".join([doc.page_content for doc in question2_docs])
-            # retriver3_text = "\n".join([doc.page_content for doc in question3_docs])
-            # retriver4_text = "\n".join([doc.page_content for doc in question4_docs])
-            # retriver5_text = "\n".join([doc.page_content for doc in question5_docs])
 
             retriver_text = "\n".join([doc.page_content for doc in retriver_document])
 
