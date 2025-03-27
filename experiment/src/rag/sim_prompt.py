@@ -138,23 +138,6 @@ if __name__ == "__main__":
             sim.append(cosine)
             total += cosine
 
-        # threshold = total / len(embeddings)
-
-        # prompt_filter = [idx for idx, p in enumerate(prompt) if sim[idx] > threshold]
-        # print(f"threshold {threshold}, filtering chuck rate {len(prompt_filter) / len(prompt)}")
-
-        # prompt = [prompt[i] for i in prompt_filter]
-        # embeddings = [embeddings[i] for i in prompt_filter]
-
-        # count = 0
-        # for idx, p in enumerate(prompt):
-        #     if sim[idx] < ALL_THRESHOLD: # 가장 스코어가 높은 답안
-        #         prompt[idx] = "작업전 안전교육 강화 및 작업장 위험요소 점검을 통한 재발 방지와 안전관리 교육 철저를 통한 향후 조치 계획."
-        #         count += 1
-
-        # print(f"바뀐 답안 rate: {count / len(prompt)}")
-        # total_count += count / len(prompt)
-
         best_answer = None
         best_score = -1
 
@@ -176,16 +159,6 @@ if __name__ == "__main__":
 
         test_results.append(best_answer)
 
-        # for a, t in zip(embeddings, prompt):
-        #     cosine_sim = cosine_similarity(q_embd, a).item()
-
-        #     if best_score < cosine_sim:
-        #         best_score = cosine_sim
-        #         best_answer = t
-        
-        # #print(f"SCD 결과 : {best_answer}")
-        # test_results.append(best_answer)
-    
     print(f"전체 답안 변환 비율 : {total_count / len(question)}")
     pred_embeddings = embedding.encode(test_results)
     print(pred_embeddings.shape)  # (샘플 개수, 768)
